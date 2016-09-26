@@ -13,7 +13,7 @@ setInterval(function () {
         gc();
     }
     console.log('Memory Usage', process.memoryUsage());
-}, 60000);
+}, 6000);
 
 mysqldb.sequelize.sync({force:true}).then(function() {
 
