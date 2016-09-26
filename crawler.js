@@ -4,10 +4,8 @@ const
     mongodb     = require('./mongodb'),
     mysql       = require('./mysql');
 
-let cnt = 0;
-
 let c = new Crawler({
-    maxConnections: 10,
+    maxConnections: 1,
     skipDuplicates: true,
     callback: function (error, result, $) {
         if(error) {
@@ -25,7 +23,9 @@ let c = new Crawler({
                     status: 'grey'
                 }
             }
-        ).then(function(page, created) {
+        ).then(function(res) {
+            let [page, created] = res;
+
             if( !created && page.status === 'black' ) return;
 
             if( created ) {
@@ -49,9 +49,12 @@ let c = new Crawler({
 
             let nextList = $('a').map(function() {
                 let href = $(this).attr('href');
+
                 if( !href || href[0] === '#' ) return undefined;
 
-                return protocol + '//' + hostname + href;
+                if( href[0] === '/' ) return protocol + '//' + hostname + href;
+
+                return href;
             }).get();
 
             try {

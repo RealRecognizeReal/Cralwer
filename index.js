@@ -8,7 +8,14 @@ const
 
 const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
 
-mysqldb.sequelize.sync({sync:true}).then(function() {
+setInterval(function () {
+    if (typeof gc === 'function') {
+        gc();
+    }
+    console.log('Memory Usage', process.memoryUsage());
+}, 60000);
+
+mysqldb.sequelize.sync({force:true}).then(function() {
 
     let c = require('./crawler');
 

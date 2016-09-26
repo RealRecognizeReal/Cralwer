@@ -5,6 +5,8 @@ const
 
 const mongoUrl = `mongodb://${mConfig.host}:${mConfig.port}/${mConfig.database}`;
 
+console.log(mongoUrl);
+
 let db;
 
 let init = function(callback) {
@@ -14,7 +16,10 @@ let init = function(callback) {
 
         db = _db;
 
-        callback();
+        db.collection('page').drop(function() {
+            callback();
+        });
+
     });
 };
 

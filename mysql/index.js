@@ -4,7 +4,7 @@ Sequelize = require('sequelize'),
 config = require('../config'),
 db = {};
 
-var sequelize = new Sequelize(config.mysql);
+var sequelize = new Sequelize(config.mysql, {logging: false});
 
 fs.readdirSync(__dirname).filter(function (file) {
     return (file.indexOf('.') !== 0) && (file !== 'index.js');

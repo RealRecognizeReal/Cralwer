@@ -4,7 +4,7 @@
   "description": "Web crawler for collecting MathML, latex, Image",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node --expose-gc --max-old-space-size=2048 index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
