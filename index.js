@@ -1,45 +1,36 @@
 const
     Crawler     = require('node-webcrawler'),
-    url         = require('url');
+    url         = require('url'),
+    config      = require('./config'),
+    mongodb     = require('./mongodb'),
+    mysqldb     = require('./mysql');
 
 
-let c = new Crawler({
-    maxConnections: 10,
-    skipDuplicates: true,
-    callback: function (error, result, $) {
-        if(error) return;
+const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
 
-        if( typeof $ !== 'function' ) return;
+mysqldb.sequelize.sync({sync:true}).then(function() {
 
-        let hostname, protocol;
+    let c = require('./crawler');
 
-        try {
-            ({hostname, protocol} = url.parse(result.uri));
-        }
-        catch(e) {
-            console.error(e);
-            return;
-        }
-
-        let nextList = $('a').map(function() {
-            let href = $(this).attr('href');
-            if( !href || href[0] === '#' ) return undefined;
-
-            return protocol + '//' + hostname + href;
-        }).get();
-
-        console.log($('.mwe-math-fallback-image-inline').map(function() {
-            return $(this).attr('alt');
-        }).get(), $('title').text());
-
-        try {
-            c.queue(nextList);
-        }
-        catch(e) {
-            console.error(e);
-            return;
-        }
-    }
+    mongodb.init(function() {
+        c.queue(startUrl);
+    });
 });
 
-c.queue('https://en.wikipedia.org/wiki/Portal:Mathematics');
+let exitHandler = function(options, error) {
+    if(error) {
+        console.log(error);
+    }
+
+    mongodb.close();
+    process.exit();
+};
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));

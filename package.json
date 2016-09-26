@@ -4,6 +4,7 @@
   "description": "Web crawler for collecting MathML, latex, Image",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/Wooooo/alan-turing#readme",
   "dependencies": {
-    "node-webcrawler": "^0.7.5"
+    "app-root-path": "^2.0.1",
+    "mongodb": "^2.2.10",
+    "mysql": "^2.11.1",
+    "node-webcrawler": "^0.7.5",
+    "sequelize": "^3.24.3"
   }
 }

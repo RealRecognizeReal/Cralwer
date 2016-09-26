@@ -140,3 +140,5 @@ $RECYCLE.BIN/
 *.lnk
 
 .idea
+
+config.js
