@@ -5,7 +5,7 @@ const
     mysql       = require('./mysql');
 
 let c = new Crawler({
-    maxConnections: 1,
+    maxConnections: 2,
     skipDuplicates: true,
     callback: function (error, result, $) {
         if(error) {
@@ -33,7 +33,7 @@ let c = new Crawler({
                     return $(this).attr('alt');
                 }).get();
 
-                console.log(formula, $('title').text());
+                //console.log(formula, $('title').text());
 
                 if( formula.length > 0 ) {
                     mongodb.insertPage({
