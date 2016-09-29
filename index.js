@@ -2,8 +2,7 @@ const
     Crawler     = require('node-webcrawler'),
     url         = require('url'),
     config      = require('./config'),
-    mongodb     = require('./mongodb'),
-    mysqldb     = require('./mysql');
+    mongodb     = require('./mongodb');
 
 
 const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
