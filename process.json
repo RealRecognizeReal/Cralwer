@@ -5,7 +5,8 @@
       "watch": false,
       "env": {
         "NODE_ENV": "production"
-      }
+      },
+      "node_args": "--expose-gc --max-old-space-size=2048"
     }
   ]
 }

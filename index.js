@@ -15,6 +15,8 @@ mongodb.init(function() {
     mongodb.findStartUrl(function(startUrl) {
         let c = require('./crawler')(startUrl);
 
+        console.log(`Start crawling from '${startUrl}'`);
+
         c.start();
     });
 });
