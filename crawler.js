@@ -7,8 +7,9 @@ const
 module.exports = function(startUrl) {
     let crawler = new Crawler(startUrl);
 
-    crawler.interval = 500;
-    crawler.maxConcurrency = 5;
+    crawler.interval = 200;
+    crawler.maxConcurrency = 10;
+    crawler.maxDepth = 4;
 
     crawler.addFetchCondition(function(queueItem, response) {
         return !queueItem.path.match(/\.(pdf|css|js|jpg|jpeg|png|bmp|svg)$/i);
