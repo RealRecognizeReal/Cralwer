@@ -2,8 +2,7 @@ const
     Crawler     = require('simplecrawler'),
     url         = require('url'),
     mongodb     = require('./mongodb'),
-    cheerio     = require('cheerio'),
-    mysql       = require('./mysql');
+    cheerio     = require('cheerio');
 
 module.exports = function(startUrl) {
     let crawler = new Crawler(startUrl);
@@ -41,7 +40,8 @@ module.exports = function(startUrl) {
             mongodb.insertPage({
                 title: $('title').text(),
                 url: currentUrl,
-                formulas
+                formulas,
+                formulasNumber: formulas.length
             }, function() {
                 delete $, formulas;
             });

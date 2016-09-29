@@ -2,11 +2,7 @@ const
     Crawler     = require('node-webcrawler'),
     url         = require('url'),
     config      = require('./config'),
-    mongodb     = require('./mongodb'),
-    express     = require('express');
-
-
-const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
+    mongodb     = require('./mongodb');
 
 setInterval(function () {
     if (typeof gc === 'function') {
@@ -16,9 +12,11 @@ setInterval(function () {
 }, 60000);
 
 mongodb.init(function() {
-    let c = require('./crawler')(startUrl);
+    mongodb.findStartUrl(function(startUrl) {
+        let c = require('./crawler')(startUrl);
 
-    c.start();
+        c.start();
+    });
 });
 
 let exitHandler = function(options, error) {
