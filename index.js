@@ -13,10 +13,9 @@ setInterval(function () {
         gc();
     }
     console.log('Memory Usage', process.memoryUsage());
-}, 6000);
+}, 60000);
 
-mysqldb.sequelize.sync({force:true}).then(function() {
-
+mongodb.init(function() {
     let c = require('./crawler')(startUrl);
 
     c.start();

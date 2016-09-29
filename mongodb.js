@@ -5,7 +5,6 @@ const
 
 const mongoUrl = `mongodb://${mConfig.host}:${mConfig.port}/${mConfig.database}`;
 
-console.log(mongoUrl);
 
 let db;
 
@@ -17,20 +16,25 @@ let init = function(callback) {
         db = _db;
 
         db.collection('page').drop(function() {
-            callback();
+            db.collection('page').createIndex({'url':1}, {unique: true}, function() {
+                callback();
+            });
+
         });
 
     });
 };
 
+let findPageByUrl = function(url, cb) {
+    let collection = db.collection('page');
+
+    collection.find({url}).limit(1).toArray(cb);
+}
+
 let insertPage = function(page) {
     let collection = db.collection('page');
 
-    collection.insertOne({
-        page
-    }, () => {
-
-    });
+    collection.insertOne(page);
 
 };
 
@@ -41,5 +45,6 @@ let close = function() {
 module.exports = {
     init,
     insertPage,
+    findPageByUrl,
     close
 }
