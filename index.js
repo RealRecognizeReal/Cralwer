@@ -10,7 +10,7 @@ const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
 
 setInterval(function () {
     if (typeof gc === 'function') {
-        //gc();
+        gc();
     }
     console.log('Memory Usage', process.memoryUsage());
 }, 6000);
