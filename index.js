@@ -10,18 +10,16 @@ const startUrl = 'https://en.wikipedia.org/wiki/Portal:Mathematics';
 
 setInterval(function () {
     if (typeof gc === 'function') {
-        gc();
+        //gc();
     }
     console.log('Memory Usage', process.memoryUsage());
 }, 6000);
 
 mysqldb.sequelize.sync({force:true}).then(function() {
 
-    let c = require('./crawler');
+    let c = require('./crawler')(startUrl);
 
-    mongodb.init(function() {
-        c.queue(startUrl);
-    });
+    c.start();
 });
 
 let exitHandler = function(options, error) {

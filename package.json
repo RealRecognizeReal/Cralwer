@@ -19,9 +19,11 @@
   "homepage": "https://github.com/Wooooo/alan-turing#readme",
   "dependencies": {
     "app-root-path": "^2.0.1",
+    "cheerio": "^0.22.0",
     "mongodb": "^2.2.10",
     "mysql": "^2.11.1",
     "node-webcrawler": "^0.7.5",
-    "sequelize": "^3.24.3"
+    "sequelize": "^3.24.3",
+    "simplecrawler": "^1.0.1"
   }
 }
