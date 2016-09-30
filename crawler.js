@@ -10,6 +10,7 @@ module.exports = function(startUrl) {
     crawler.interval = 100;
     crawler.maxConcurrency = 10;
     crawler.maxDepth = 5;
+    crawler.downloadUnsupported = true;
 
     crawler.addFetchCondition(function(queueItem, response) {
         return !queueItem.path.match(/\.(pdf|css|js|jpg|jpeg|png|bmp|svg)$/i);
@@ -20,35 +21,51 @@ module.exports = function(startUrl) {
     });
 
     crawler.on('fetchcomplete', function(queueItem, data, res) {
-        let done = this.wait();
-
-        let $ = cheerio.load(data.toString('utf8'));
-
-        if(typeof $ !== 'function') return;
-
         let currentUrl = queueItem.url;
 
         mongodb.findPageByUrl(currentUrl, function(err, [page]) {
             if(err || page) {
                 if(err)console.error(err);
-                return;
             }
 
-            let formulas = $('img.mwe-math-fallback-image-inline').map(function(idx, item) {
-                return {img: $(item).attr('src'), latex: $(item).attr('alt'), mathml: $(item).prev().html()};
-            }).get();
+            let $ = cheerio.load(data.toString('utf8'));
+            if(typeof $ !== 'function') return;
 
-            mongodb.insertPage({
-                title: $('title').text(),
-                url: currentUrl,
-                formulas,
-                formulasNumber: formulas.length
-            }, function() {
-                delete $, formulas;
-            });
+            let title = $('title').text();
 
+            mongodb.findPageByTitle(title, function(err, [pageWithTitle]) {
+                if(err) {
+                    console.error(err);
+                    $ = null;
+                    return;
+                }
 
-            done();
+                let redirect, formulas, formulasNumber;
+                if(pageWithTitle) {
+                    redirect = pageWithTitle.url;
+                }
+                else {
+                    formulas = $('img.mwe-math-fallback-image-inline').map(function(idx, item) {
+                        let $item = $(item);
+
+                        return {img: $item.attr('src'), latex: $item.attr('alt'), mathml: $item.prev().html()};
+                    }).get();
+
+                    formulasNumber = formulas.length;
+                }
+
+                mongodb.insertPage({
+                    title,
+                    url: currentUrl,
+                    redirect,
+                    formulas,
+                    formulasNumber
+                }, function() {
+                    $ = null;
+                    formulas = null;
+                });
+            })
+
         });
 
 

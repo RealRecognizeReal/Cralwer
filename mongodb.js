@@ -33,6 +33,12 @@ let findPageByUrl = function(url, cb) {
     collection.find({url}).limit(1).toArray(cb);
 }
 
+let findPageByTitle = function(title, cb) {
+    let collection = db.collection('page');
+
+    collection.find({title}).limit(1).toArray(cb);
+
+}
 let insertPage = function(page, cb) {
     let collection = db.collection('page');
 
@@ -68,5 +74,6 @@ module.exports = {
     insertPage,
     findPageByUrl,
     findStartUrl,
+    findPageByTitle,
     close
 }
