@@ -9,7 +9,7 @@ setInterval(function () {
         gc();
     }
     console.log('Memory Usage', process.memoryUsage());
-}, 60000);
+}, 30000);
 
 mongodb.init(function() {
     mongodb.findStartUrl(function(startUrl) {

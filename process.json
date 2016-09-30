@@ -6,7 +6,9 @@
       "env": {
         "NODE_ENV": "production"
       },
-      "node_args": "--expose-gc --max-old-space-size=2048"
+      "instances": 2,
+      "exec_mode": "cluster",
+      "node_args": "--expose-gc --max-old-space-size=1024"
     }
   ]
 }
