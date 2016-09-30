@@ -17,7 +17,9 @@ let init = function(callback) {
 
         //db.collection('page').drop(function() {
             db.collection('page').createIndex({'url':1}, {unique: true}, function() {
-                callback();
+                db.collection('page').createIndex({'title':1}, {unique: true}, function() {
+                    callback();
+                });
             });
 
         //});
