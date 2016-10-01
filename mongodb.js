@@ -36,7 +36,7 @@ let findPageByUrl = function(url, cb) {
 let findPageByTitle = function(title, cb) {
     let collection = db.collection('page');
 
-    collection.find({title}).limit(1).toArray(cb);
+    collection.find({title, redirect: null}).limit(1).toArray(cb);
 
 }
 let insertPage = function(page, cb) {

@@ -12,13 +12,18 @@ setInterval(function () {
 }, 30000);
 
 mongodb.init(function() {
-    mongodb.findStartUrl(function(startUrl) {
-        let c = require('./crawler')(startUrl);
+    let pendingTime = Math.floor(Math.random()*5000);
 
-        console.log(`Start crawling from '${startUrl}'`);
+    setTimeout(function() {
+        mongodb.findStartUrl(function(startUrl) {
+            let c = require('./crawler')(startUrl);
 
-        c.start();
-    });
+            console.log(`Start crawling from '${startUrl}' with pending ${pendingTime}`);
+
+            c.start();
+        });
+    }, pendingTime);
+
 });
 
 let exitHandler = function(options, error) {
