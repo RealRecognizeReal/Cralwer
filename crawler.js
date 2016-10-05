@@ -7,8 +7,8 @@ const
 module.exports = function(startUrl) {
     let crawler = new Crawler(startUrl);
 
-    crawler.interval = 100;
-    crawler.maxConcurrency = 10;
+    crawler.interval = 200;
+    crawler.maxConcurrency = 5;
     crawler.maxDepth = 5;
     crawler.downloadUnsupported = true;
 
