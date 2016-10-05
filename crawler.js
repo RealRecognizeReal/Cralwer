@@ -26,6 +26,7 @@ module.exports = function(startUrl) {
         mongodb.findPageByUrl(currentUrl, function(err, [page]) {
             if(err || page) {
                 if(err)console.error(err);
+                return;
             }
 
             let $ = cheerio.load(data.toString('utf8'));
