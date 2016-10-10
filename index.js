@@ -2,16 +2,24 @@ const
     Crawler     = require('node-webcrawler'),
     url         = require('url'),
     config      = require('./config'),
-    mongodb     = require('./mongodb');
+    mongodb     = require('./mongodb'),
+    path        = require('path'),
+    rimraf      = require('rimraf'),
+    heapdump    = require('heapdump');
 
 setInterval(function () {
     if (typeof gc === 'function') {
         gc();
     }
+
+    //heapdump.writeSnapshot(path.join(__dirname, Date.now()+'.heapsnapshot'));
+
     console.log('Memory Usage', process.memoryUsage());
 }, 30000);
 
 mongodb.init(function() {
+    rimraf.sync('core*');
+
     let pendingTime = Math.floor(Math.random()*5000);
 
     setTimeout(function() {

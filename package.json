@@ -22,7 +22,11 @@
     "cheerio": "^0.22.0",
     "mongodb": "^2.2.10",
     "node-webcrawler": "^0.7.5",
+    "rimraf": "^2.5.4",
     "sequelize": "^3.24.3",
     "simplecrawler": "^1.0.1"
+  },
+  "devDependencies": {
+    "heapdump": "^0.3.7"
   }
 }
