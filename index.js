@@ -20,7 +20,7 @@ setInterval(function () {
 mongodb.init(function() {
     rimraf.sync('core*');
 
-    let pendingTime = Math.floor(Math.random()*5000);
+    let pendingTime = Math.floor(Math.random()*10000);
 
     setTimeout(function() {
         mongodb.findStartUrl(function(startUrl) {
