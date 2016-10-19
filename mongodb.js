@@ -16,11 +16,11 @@ let init = function(callback) {
         db = _db;
 
         //db.collection('page').drop(function() {
-            db.collection('page').createIndex({'url':1}, {unique: true}, function() {
-                db.collection('page').createIndex({'title':1}, {unique: true}, function() {
+        //    db.collection('page').createIndex({'url':1}, {unique: true}, function() {
+        //        db.collection('page').createIndex({'title':1}, {unique: true}, function() {
                     callback();
-                });
-            });
+        //        });
+        //    });
 
         //});
 
