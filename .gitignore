@@ -142,3 +142,5 @@ $RECYCLE.BIN/
 .idea
 
 config.js
+
+process.json
