@@ -3,6 +3,8 @@ const
     url         = require('url'),
     mongodb     = require('./mongodb'),
     config      = require('./config'),
+    path        = require('path'),
+    appRoot     = require('app-root-path'),
     cheerio     = require('cheerio');
 
 module.exports = function(startUrl) {
@@ -10,8 +12,12 @@ module.exports = function(startUrl) {
 
     crawler.interval = config.interval || 100;
     crawler.maxConcurrency = config.maxConcurrency || 10;
-    crawler.maxDepth = 5;
+    crawler.maxDepth = 4;
     crawler.downloadUnsupported = false;
+
+    if(config.cache) {
+        crawler.cache = new Crawler.cache(config.cache);
+    }
 
     crawler.addFetchCondition(function(queueItem, response) {
         return !queueItem.path.match(/\.(pdf|css|js|jpg|jpeg|png|bmp|svg)$/i);
