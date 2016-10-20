@@ -13,6 +13,9 @@ module.exports = function(startUrl) {
     crawler.interval = config.interval || 100;
     crawler.maxConcurrency = config.maxConcurrency || 10;
     crawler.maxDepth = 4;
+    crawler.parseScriptTags = false;
+    crawler.parseHTMLComments = false;
+
     crawler.downloadUnsupported = false;
 
     if(config.cache) {
