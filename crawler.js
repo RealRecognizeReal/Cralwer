@@ -2,15 +2,16 @@ const
     Crawler     = require('simplecrawler'),
     url         = require('url'),
     mongodb     = require('./mongodb'),
+    config      = require('./config'),
     cheerio     = require('cheerio');
 
 module.exports = function(startUrl) {
     let crawler = new Crawler(startUrl);
 
-    crawler.interval = 100;
-    crawler.maxConcurrency = 10;
+    crawler.interval = config.interval || 100;
+    crawler.maxConcurrency = config.maxConcurrency || 10;
     crawler.maxDepth = 5;
-    crawler.downloadUnsupported = true;
+    crawler.downloadUnsupported = false;
 
     crawler.addFetchCondition(function(queueItem, response) {
         return !queueItem.path.match(/\.(pdf|css|js|jpg|jpeg|png|bmp|svg)$/i);
